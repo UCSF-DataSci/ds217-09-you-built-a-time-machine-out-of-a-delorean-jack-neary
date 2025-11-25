@@ -1,0 +1,17 @@
+
+TODO: Document your timezone operations:
+- What timezone was your original data in?
+    We don't know what timezone our original data was in
+- How did you localize the data?
+    We localized the data by setting it to UTC, which is the primary standard global time.
+- What timezone did you convert to?
+    We then converted it to eastern time
+- What issues did you encounter with DST? (Note: Using UTC avoids DST ambiguity)
+    The issues encountered with DST is that certain local times can be ambiguous when in fall, we get two of the same times, and in spring, we skip over an hour.
+- Include at least one example showing a datetime before and after conversion
+    Original UTC time: 2023-03-12 10:00:00+00:00  
+    Converted to US Eastern: 2023-03-12 06:00:00-04:00
+- Explain why UTC is recommended as the base timezone for storing temporal data
+    UTC is recommended for storing times because it never changes for daylight saving. 
+    This makes every timestamp clear and unambiguous. Storing data in UTC avoids problems with repeated or missing local times. 
+    You can convert to local time only when you need to display it.
