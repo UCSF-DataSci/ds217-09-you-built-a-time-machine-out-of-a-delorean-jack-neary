@@ -1,0 +1,46 @@
+
+TODO: Document your missing data handling:
+1.  We found 323 missing values, which made up 96.4% of all data in this dataset. 
+2.  Originally when we were looking by day, there were 335 values. When we resampled the mohthly data to daily frequency, only one value per month was recorded and we were given 323 NaNs for the rest of the data. 
+    Data is missing because we resampled from month to one day per month which is only 12 values.
+3.  The imputation methods used included forward fill, backward fill, interpolation(regular, linear, and time) and rolling mean.
+    Forward fill copies the last known value forward to fill all the missing values that come after it. Backward fill does copies the next known value and fills all missing values that come before it.
+    Both of these were not the correct methods to use because these are used when the next or previous values are a good guess for the missings, which they are not.
+    Interpolation estimates missing values by assuming gradual changes between two known points. Linear interpolation fills missing days with values along a stright line between monthly data, whereas time-based interpolation uses time-spacing which is useful when times aren't evenly spaced.
+    Rolling mean fills the values using the average of nearby days but is less reliable when there are large gaps between data points.
+    The imputation method that I chose is linear interpolation.
+4.  I chose linear interpolation because the daily unsampled data is evenly spaced and linear interpolation provides a smooth estimate of missing values between the single monthly measurements without artificially repeating any one value.
+5.  Pros: smooth estimate between known points; avoids repeating same value for long gaps; good for evenly spaced time series data.
+    Cons: assumes linearity between points, bad if there are fluctuations; doesn't use information from surrounding points
+6.  Example: When we just had our dataframe "ts_with_missing" there were 96.4% missing values. When we used ffill() this filled all of the missing values.
+    Although bfill filled all of the missing values, it filled wit with sub-optimal data; just the data from the last known point.
+    When we compare ffill to interpolate(method='linear'), we can see that the changes in temperature values for each day from ffill to interpolate. 
+
+
+Missing patterns:
+Missing by month:
+date
+1      0
+2     27
+3     30
+4     29
+5     30
+6     29
+7     30
+8     30
+9     29
+10    30
+11    29
+12    30
+Name: temperature, dtype: int64
+
+Missing by day of week:
+date
+0    46
+1    45
+2    47
+3    46
+4    46
+5    47
+6    46
+Name: temperature, dtype: int64
